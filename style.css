@@ -13,6 +13,10 @@ a {
   box-sizing: border-box;
 }
 
+nav a {
+  margin-right: 8px;
+}
+
 @media (max-width: 979px) {
   #page {
     width: 100%;
