@@ -18,6 +18,13 @@ Initializ in one line:
 pill('#content') // Yep, that's it.
 ```
 
+## Table of Contents
+
+* [Install](#install)
+* [Usage](#usage)
+* [API](#api)
+* [License](#license)
+
 ## Install
 
 Include script from unpkg.com:
@@ -137,12 +144,12 @@ to render content using method `fromError`
 Determine wither URL could be served by Pill. If returns `false` than link
 will be served by browser.
 
-### `shouldReload()`
+### `Options.shouldReload()`
 ```
 (page) => boolean
 ```
 
-Determine wether page should be reloaded.
+Determine wether previuosly loaded page should be loaded from server.
 
 ## License
 
