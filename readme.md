@@ -9,7 +9,7 @@ by Andrey Sitnik [@ai](https://github.com/ai).
 
 How pill works. It:
 
-1. Intercepts navigation attempts.
+1. Intercepts navigation attempts: links clicks and history navigation.
 2. Loads requested url using `fetch`.
 3. Grabs content from received HTML.
 4. Replaces current page content.
