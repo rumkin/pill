@@ -53,11 +53,11 @@ npm i pill
   pill('#content', {
     onLoading() {
       // Show loading indicator
-      indicator.style.display = 'initial'
+      loadingIndicator.style.display = 'initial'
     },
     onReady() {
       // Hide loading indicator
-      indicator.style.display = 'none'
+      loadingIndicator.style.display = 'none'
     }
   })
   ```
