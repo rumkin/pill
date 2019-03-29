@@ -17,11 +17,8 @@
   },
   "name": "pill",
   "description": "Pill dynamic content loading for static sites.",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "main": "dist/node/pill.js",
-  "bin": {
-    "pill": "checksum.js"
-  },
   "directories": {
     "example": "example"
   },
