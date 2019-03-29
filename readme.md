@@ -1,7 +1,7 @@
 ![Pill logo](docs/cover.png)
 
 Pill adds dynamic content loading to static sites and makes content loading
-smooth for users. It's pretty small only _1 KiB_ minified and gziped. It fit's perfectly
+smooth for users. It's pretty small only _1 KiB_ minified and gziped. It fits perfectly
 for static sites with WebComponents.
 
 Pill development started with Andrey Sitnik's [@ai](https://github.com/ai) [twit](https://twitter.com/sitnikcode/status/1109626507331338240).
@@ -25,10 +25,10 @@ Include script from unpkg.com:
 <script src="https://unpkg.com/pill@1/dist/pill.min.js"></script>
 ```
 
-> Don't forget about security. Add [subresource integrity](https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity) (SRI) checksum
+> ⚠️ Remember about security! Add [subresource integrity](https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity) (SRI) checksum
 > from [checksum.txt](unpkg.com/pill@1/dist/checksum.txt).
 
-or via npm
+or install via npm
 
 ```
 npm i pill
@@ -36,9 +36,9 @@ npm i pill
 
 ## Usage
 
-1. Inject pill.js with `<script>`
-2. Create div element and give it meaningful id.
-3. Create loading indicator.
+1. Inject pill's `<script>` into page.
+2. Create content root element and give it id.
+3. Create loading indicator element.
 4. Initialize pill:
   ```javascript
   const loadingIndicator = document.querySelector('#indicator')
@@ -121,12 +121,6 @@ Handle loading start.
 (page:Page) -> void
 ```
 Handle loading finish.
-
-### `Options.resolve()`
-```
-(url:URL) -> URL
-```
-Transform requested url before fetching,
 
 ### `Options.fromError()`
 ```

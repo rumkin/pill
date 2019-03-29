@@ -63,7 +63,6 @@ export default function pill(
   {
     onReady = () => {},
     onLoading = () => {},
-    resolve = (v) => v,
     fromError = defaultErrorHandler,
     shouldServe = shouldServeDefault,
     shouldReload = () => false,
@@ -94,8 +93,6 @@ export default function pill(
   updateState(url, page.title, false)
 
   const goto = (url, push) => {
-    url = resolve(url);
-
     if (url.pathname in pages) {
       const page = pages[url.pathname]
 
