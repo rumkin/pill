@@ -6,6 +6,19 @@ a {
   color: #06f;
 }
 
+#page {
+  width: 980px;
+  margin: 0 auto;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+@media (max-width: 979px) {
+  #page {
+    width: 100%;
+  }
+}
+
 #indicator {
   position: fixed;
   top: 0;
