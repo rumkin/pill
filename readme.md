@@ -4,7 +4,7 @@ Pill adds dynamic content loading to static sites and makes content loading
 smooth for users. It's pretty small only _1 KiB_ minified and gziped. It fit's perfectly
 for static sites with WebComponents.
 
-Pill development started with Andrei Sitnik's [@ai](https://github.com/ai) twit.
+Pill development started with Andrey Sitnik's [@ai](https://github.com/ai) [twit](https://twitter.com/sitnikcode/status/1109626507331338240).
 
 How pill works. It:
 
