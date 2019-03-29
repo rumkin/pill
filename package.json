@@ -16,7 +16,7 @@
     "prepublishOnly": "npm run clean && npm run build"
   },
   "name": "pill",
-  "description": "Pill adds dynamic content loading to static HTML sites and makes content loading smooth for users. It's pretty small only 1KiB minified and gziped.",
+  "description": "Pill dynamic content loading for static sites.",
   "version": "1.0.0",
   "main": "dist/node/pill.js",
   "bin": {
