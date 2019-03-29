@@ -2,9 +2,31 @@ html {
   font-family: sans-serif;
 }
 
+a {
+  color: #06f;
+}
+
 #indicator {
   position: fixed;
   top: 0;
   right: 0;
+  left: 0;
+  height: 3px;
   display: none;
+  background-color: #06f;
+}
+
+.is-loading {
+  display: block;
+  animation: blink 1.5s linear infinite;
+}
+
+@keyframes blink {
+  from, to {
+    background-color: #06f;
+  }
+
+  50% {
+    background-color: rgb(106, 238, 255);
+  }
 }
