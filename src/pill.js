@@ -75,7 +75,7 @@ export default function pill(
   let current = null;
 
   const element = document.querySelector(selector)
-  element._; // tiny throw if element not exists
+  element._; // throw an exception if element not exists
   const url = new URL(document.location);
   const page = createPage(document.title, element.innerHTML, 200)
   const pages = {
@@ -108,7 +108,7 @@ export default function pill(
     .then(async (res) => {
       let page = fromResponse(selector, res, await res.text())
 
-      pages[url] = page
+      pages[url.pathname] = page
 
       page.status = res.status;
       page.timestamp = new Date();
