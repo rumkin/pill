@@ -1,0 +1,6 @@
+.eslintrc
+.eslintignore
+.editorconfig
+
+local/
+src/

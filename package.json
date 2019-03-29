@@ -1,0 +1,45 @@
+{
+  "devDependencies": {
+    "babel-minify": "^0.5.0",
+    "rollup": "^1.7.4",
+    "serve": "^10.1.2",
+    "ssri": "^6.0.1"
+  },
+  "scripts": {
+    "start": "serve -l 8080 -n example",
+    "clean": "rm -rf dist",
+    "build": "npm run build:iife && npm run build:cjs && npm run build:minify && npm run build:checksum",
+    "build:iife": "rollup --format iife --name pill -o dist/pill.js src/pill.js",
+    "build:cjs": "rollup --format cjs --name pill -o dist/node/pill.js src/pill.js",
+    "build:minify": "babel-minify -o dist/pill.min.js dist/pill.js",
+    "build:checksum": "node bin/checksum.js dist dist/*.js > dist/checksum.txt",
+    "prepublishOnly": "npm run clean && npm run build"
+  },
+  "name": "pill",
+  "description": "Pill adds dynamic content loading to static HTML sites and makes content loading smooth for users. It's pretty small only 1KiB minified and gziped.",
+  "version": "1.0.0",
+  "main": "dist/node/pill.js",
+  "bin": {
+    "pill": "checksum.js"
+  },
+  "directories": {
+    "example": "example"
+  },
+  "dependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rumkin/pill.git"
+  },
+  "keywords": [
+    "static",
+    "site",
+    "dynamic",
+    "loading"
+  ],
+  "author": "Rumkin <dev@rumk.in> (https://rumk.in/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rumkin/pill/issues"
+  },
+  "homepage": "https://github.com/rumkin/pill#readme"
+}
