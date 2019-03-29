@@ -13,6 +13,11 @@ How pill works. It:
 3. Grabs content from received HTML.
 4. Replaces current page content.
 
+Initializ in one line:
+```javascript
+pill('#content') // Yep, that's it.
+```
+
 ## Install
 
 Include script from unpkg.com:
@@ -36,7 +41,18 @@ npm i pill
 3. Create loading indicator.
 4. Initialize pill:
   ```javascript
-  pill('#content')
+  const loadingIndicator = document.querySelector('#indicator')
+
+  pill('#content', {
+    onLoading() {
+      // Show loading indicator
+      indicator.style.display = 'initial'
+    },
+    onReady() {
+      // Hide loading indicator
+      indicator.style.display = 'none'
+    }
+  })
   ```
 
 ### Complete example
