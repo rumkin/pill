@@ -1,14 +1,17 @@
-# Pill
+![Pill logo](docs/cover.png)
 
-Pill adds dynamic content loading to static HTML sites and makes content loading
-smooth for users. It's pretty small only 1KiB minified and gziped.
+Pill adds dynamic content loading to static sites and makes content loading
+smooth for users. It's pretty small only _1 KiB_ minified and gziped. It fit's perfectly
+for static sites with WebComponents.
 
-How it works:
+Pill development started with Andrei Sitnik's [@ai](https://github.com/ai) twit.
 
-1. Intercept navigation attempts.
-2. Load requested url using `fetch`.
-3. Grab content from received HTML.
-4. Replace current page content.
+How pill works. It:
+
+1. Intercepts navigation attempts.
+2. Loads requested url using `fetch`.
+3. Grabs content from received HTML.
+4. Replaces current page content.
 
 ## Install
 
@@ -33,19 +36,7 @@ npm i pill
 3. Create loading indicator.
 4. Initialize pill:
   ```javascript
-  const loadingIndicator = document.querySelector('#indicator')
-  
-  // Initialize pill
-  pill('#content', {
-    onLoading() {
-      // Show loading indicator
-      indicator.style.display = 'visible'
-    },
-    onReady() {
-      // Hide loading indicator
-      indicator.style.display = 'none'
-    }
-  })
+  pill('#content')
   ```
 
 ### Complete example
