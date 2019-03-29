@@ -28,19 +28,19 @@ pill('#content') // Yep, that's it.
 
 ## Install
 
-Include script from unpkg.com:
-```html
-<script src="https://unpkg.com/pill@1/dist/pill.min.js"></script>
-```
+* Include script from unpkg.com:
+  ```html
+  <script src="https://unpkg.com/pill@1/dist/pill.min.js"></script>
+  ```
 
-> ⚠️ Remember about security! Add [subresource integrity](https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity) (SRI) checksum
-> from [checksum.txt](unpkg.com/pill@1/dist/checksum.txt).
+  > ⚠️ Remember about security! Add [subresource integrity](https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity) (SRI) checksum
+  > from [checksum.txt](https://unpkg.com/pill@1/dist/checksum.txt).
 
-or install via npm
+* Install via npm:
 
-```
-npm i pill
-```
+  ```
+  npm i pill
+  ```
 
 ## Usage
 
