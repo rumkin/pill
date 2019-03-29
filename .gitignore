@@ -1,0 +1,18 @@
+bower_components/
+coverage/
+dist/
+build/
+local/
+logs/
+node_modules/
+pids/
+tmp/
+
+# OS files
+**/.DS_Store
+
+# Runtime files
+*.log
+*.pid
+*.lock
+*.pid.lock

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Main Page</title>
+    <link rel="stylesheet" type="text/css" href="/pill/style.css" />
+    <script
+      src="https://unpkg.com/pill@1.0.0/dist/pill.min.js"
+      integrity="sha384-TLcLNaYXCs2pjEXrKWpXZBeqMlWwyHuGkuLH6X6PAYjf/diCpvI2qmxqLygmXVxh"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <div id="indicator">Loading...</div>
+    <!-- PAGE CONTENT START -->
+    <div id='page'>
+      <nav>
+        <a href="/pill/">Home</a>
+        <a href="/pill/pages/a">Page A</a>
+        <a href="/pill/pages/b">Page B</a>
+        <a href="/pill/pages/not-exists">Not existing page</a>
+      </nav>
+
+      <h1>Main page</h1>
+      <p>
+        Main page content.
+        <a href='#anchor'>Anchor</a>
+      </p>
+      <div style="height: 100vh"></div>
+      <p>
+        <a name="anchor"></a> <span>Anchor</span>
+      </p>
+    </div>
+    <!-- PAGE CONTENT END -->
+    <script src='/pill/site.js' type='module'></script>
+  </body>
+</html>
