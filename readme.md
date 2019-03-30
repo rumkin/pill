@@ -1,5 +1,9 @@
 ![Pill logo](docs/cover.png)
 
+[![npm](https://img.shields.io/npm/v/pill.svg?style=flat-square)](https://npmjs.com/package/pill)
+![](https://img.shields.io/badge/size-1.1%20KiB-blue.svg?style=flat-square)
+![](https://img.shields.io/badge/deps-0-blue.svg?style=flat-square)
+
 Pill adds dynamic content loading to static sites and makes content loading
 smooth for users. It's pretty small only _1 KiB_ minified and gzipped. It fits perfectly
 for static sites with WebComponents.
