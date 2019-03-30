@@ -47,3 +47,11 @@ nav a {
     background-color: rgb(106, 238, 255);
   }
 }
+
+#project-link {
+  display: block;
+  position: fixed;
+  padding: 8px;
+  top: 0;
+  right: 0;
+}
