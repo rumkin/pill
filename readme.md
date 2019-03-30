@@ -1,7 +1,8 @@
 ![Pill logo](docs/cover.png)
 
 [![npm](https://img.shields.io/npm/v/pill.svg?style=flat-square)](https://npmjs.com/package/pill)
-![](https://img.shields.io/badge/size-1.1%20KiB-blue.svg?style=flat-square)
+![](https://img.shields.io/badge/size-1.1%20KiB-green.svg?style=flat-square)
+![](https://img.shields.io/badge/js%20version-es5-yellow.svg?style=flat-square)
 ![](https://img.shields.io/badge/deps-0-blue.svg?style=flat-square)
 
 Pill adds dynamic content loading to static sites and makes content loading
