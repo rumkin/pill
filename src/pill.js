@@ -2,8 +2,13 @@ function shouldServeDefault(href) {
   return href.origin === location.origin
 }
 
-function createPage(title = '', content = '', status = 0, timestamp = new Date()) {
-  return {title, content, status, timestamp}
+function createPage(title, content, status, timestamp) {
+  return {
+    title: title || '',
+    content: content || '',
+    status: status || 0,
+    timestamp: timestamp || new Date()
+  }
 }
 
 function setContent(root, page) {
@@ -19,17 +24,17 @@ function fromResponse(selector, response, text) {
 
   const title = fragRoot.querySelector('title').textContent
   const root = fragRoot.querySelector(selector)
-  const content = root ? root.innerHTML : '';
+  const content = root ? root.innerHTML : ''
 
-  return {title, content}
+  return {title: title, content: content}
 }
 
-function updateState(url, title, push) {
+function updateState(state, url, title, push) {
   if (push) {
-    history.pushState({}, title, url)
+    history.pushState(state || {}, title, url)
   }
   else {
-    history.replaceState({}, title, url)
+    history.replaceState(state || {}, title, url)
   }
 }
 
@@ -43,8 +48,8 @@ function defaultErrorHandler() {
 }
 
 function scrollToAnchor(name) {
-  setTimeout(() => {
-    let anchor;
+  requestAnimationFrame(function () {
+    let anchor
     if (name in document.anchors) {
       anchor = document.anchors[name]
     }
@@ -58,67 +63,79 @@ function scrollToAnchor(name) {
   })
 }
 
-export default function pill(
-  selector,
-  {
-    onReady = () => {},
-    onLoading = () => {},
-    fromError = defaultErrorHandler,
-    shouldServe = shouldServeDefault,
-    shouldReload = () => false,
-  } = {}
-) {
-  if (typeof window.history.pushState !== 'function') {
-    return () => {}
-  }
+function noop() {}
 
-  let current = null;
+export default function pill(selector, options) {
+  if (typeof window.history.pushState !== 'function') {
+    return
+  }
+  options = options || {}
+  const onReady = options.onReady || noop
+  const onLoading = options.onLoading || noop
+  const fromError = options.fromError || defaultErrorHandler
+  const shouldServe = options.shouldServe || shouldServeDefault
+  const shouldReload = options.shouldReload || noop
+
+  let current = null
 
   const element = document.querySelector(selector)
-  element._; // throw an exception if element not exists
-  const url = new URL(document.location);
-  const page = createPage(document.title, element.innerHTML, 200)
-  const pages = {
-    [url.pathname]: page,
+  if (! element) {
+    throw new Error('Element "' + selector + '" not found')
   }
-  const render = (url, page, push) => {
-    updateState(url, page.title, push);
+  const url = new URL(document.location)
+  const page = createPage(document.title, element.innerHTML, 200)
+  const pages = {}
+  pages[url.pathname] = page
+  function render (url, page, push) {
+    updateState(null, url, page.title, push)
     setContent(element, page)
     onReady(page)
     if (push && url.hash.length > 1) {
       scrollToAnchor(url.hash.slice(1))
     }
   }
-
-  updateState(url, page.title, false)
+  // Initial scroll
+  updateState({scroll: window.scrollY}, url, page.title, false)
 
   const goto = (url, push) => {
     if (url.pathname in pages) {
       const page = pages[url.pathname]
 
-      if (shouldReload(page) === false) {
+      if (shouldReload(page) !== true) {
         render(url, page, push)
         return
       }
     }
 
-    updateState(url, url, push)
+    updateState(null, url, url, push)
 
     const request = current = fetch(url)
-    .then(async (res) => {
-      let page = fromResponse(selector, res, await res.text())
+    .then(function (res) {
+      return res.text()
+      .then((function(text) {
+        return {
+          res: res,
+          text: text,
+        }
+      }))
+    })
+    .then((function (result) {
+      const res = result.res
+      const text = result.text
+
+      let page = fromResponse(selector, res, text)
 
       pages[url.pathname] = page
 
-      page.status = res.status;
-      page.timestamp = new Date();
+      page.status = res.status
+      page.timestamp = new Date()
 
       if (request !== current) {
         return
       }
       current = null
       render(url, page, false)
-    })
+    }))
     .catch((error) => {
       if (request === current) {
         current = null
@@ -135,7 +152,7 @@ export default function pill(
     onLoading(url)
   }
 
-  const onClick = (e) => {
+  function onClick (e) {
     if (e.target.nodeName !== 'A') {
       return
     }
@@ -146,25 +163,27 @@ export default function pill(
       return
     }
 
-    e.preventDefault();
+    e.preventDefault()
 
     window.scrollTo(0, 0)
     goto(url, current === null)
   }
 
-  const onPopState = (e) => {
+  function onPopState(e) {
     goto(new URL(document.location), false)
-    setTimeout(() => window.scrollTo(0, e.state.scroll || 0))
+    requestAnimationFrame(function() {
+      window.scrollTo(0, e.state.scroll || 0)
+    })
   }
 
-  let scrollDebounceTimeout;
-  const onScroll = () => {
+  let scrollDebounceTimeout
+  function onScroll() {
     if (scrollDebounceTimeout) {
       return
     }
 
-    scrollDebounceTimeout = setTimeout(() => {
-      history.replaceState({scroll: window.scrollY}, document.title, document.location)
+    scrollDebounceTimeout = setTimeout(function () {
+      updateState({scroll: window.scrollY}, document.location, document.title, false)
       scrollDebounceTimeout = null
     }, 100)
   }
