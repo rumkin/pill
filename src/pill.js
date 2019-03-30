@@ -97,7 +97,7 @@ export default function pill(selector, options) {
   // Initial scroll
   updateState({scroll: window.scrollY}, url, page.title, false)
 
-  const goto = (url, push) => {
+  function goto(url, push) {
     if (url.pathname in pages) {
       const page = pages[url.pathname]
 
@@ -136,7 +136,7 @@ export default function pill(selector, options) {
       current = null
       render(url, page, false)
     }))
-    .catch((error) => {
+    .catch(function (error) {
       if (request === current) {
         current = null
       }
