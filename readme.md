@@ -19,7 +19,7 @@ How pill works. It:
 3. Grabs content from received HTML.
 4. Replaces current page content.
 
-Initializ in one line:
+Initialize in one line:
 ```javascript
 pill('#content') // Yep, that's it.
 ```
