@@ -1,29 +1,38 @@
-const fs = require('fs');
-const path = require('path');
-const ssri = require('ssri');
+const fs = require('fs')
+const path = require('path')
+const {createHash} = require('crypto')
 
-async function generateDigests([dir, ...files]) {
-  dir = path.resolve(dir) + '/';
+function calcHash(filepath) {
+  const hash = createHash('sha384')
 
-  const signatures = await Promise.all(files.map(
-    (file) => getDigest(path.resolve(file)))
-  )
+  const stream = fs.createReadStream(filepath)
+  return new Promise((resolve, reject) => {
+    stream.on('data', (chunk) => hash.update(chunk))
+    stream.on('error', reject)
+    stream.on('end', () => {
+      resolve(hash.digest())
+    })
+  })
+}
 
-  for (const {file, digest} of signatures) {
-    console.log('%s %s', digest, file.slice(dir.length))
+async function calcHashes(dir, files) {
+  dir = path.resolve(dir)
+  const result = await Promise.all(files.map(async (p) => {
+    const filepath = path.resolve(p)
+    const digest = await calcHash(filepath)
+
+    return {
+      filepath: path.relative(dir, filepath),
+      digest,
+    }
+  }))
+
+  for (const {filepath, digest} of result) {
+    console.log('%s %s', digest.toString('base64'), filepath)
   }
 }
 
-async function getDigest(file) {
-  const result = await ssri.fromStream(
-    fs.createReadStream(file),
-    {algorithms: ['sha384']}
-  )
-
-  return {file, digest: result.sha384[0].digest}
-}
-
-generateDigests(process.argv.slice(2))
+calcHashes(process.argv[2], process.argv.slice(3))
 .catch((error) => {
   console.error(error)
   return 1
