@@ -3,7 +3,7 @@
 </p>
 
 <p align="center">
-  <a href="https://npmjs.com/packages/pill">
+  <a href="https://npmjs.com/package/pill">
     <img alt="badge: npm version" src="https://img.shields.io/npm/v/pill.svg?style=flat-square" />
   </a>
   <img alt="badge: size 1.1 KiB" src="https://img.shields.io/badge/size-1.1%20KiB-blue.svg?style=flat-square" />
