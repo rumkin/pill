@@ -1,9 +1,14 @@
-![Pill logo](docs/cover.png)
+<p align="center">
+  <img width="220" alt="Pill logo" src="docs/cover.png">
+</p>
 
-[![npm](https://img.shields.io/npm/v/pill.svg?style=flat-square)](https://npmjs.com/package/pill)
-![](https://img.shields.io/badge/size-1.1%20KiB-green.svg?style=flat-square)
-![](https://img.shields.io/badge/js%20version-es5-yellow.svg?style=flat-square)
-![](https://img.shields.io/badge/deps-0-blue.svg?style=flat-square)
+<p align="center">
+  <a href="https://npmjs.com/packages/pill">
+    <img alt="badge: npm version" src="https://img.shields.io/npm/v/pill.svg?style=flat-square" />
+  </a>
+  <img alt="badge: size 1.1 KiB" src="https://img.shields.io/badge/size-1.1%20KiB-blue.svg?style=flat-square" />
+  <img alt="badge: deps 0" src="https://img.shields.io/badge/deps-0-blue.svg?style=flat-square" />
+</p>
 
 Pill adds dynamic content loading to static sites and makes content loading
 smooth for users. It's pretty small only _1 KiB_ minified and gzipped. It fits perfectly
