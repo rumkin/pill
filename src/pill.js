@@ -41,7 +41,7 @@ function updateState(state, url, title, push) {
 function defaultErrorHandler() {
   return {
     title: 'Error',
-    content: `<h1>Error</h1><p>Ooops. Something went wrong</p>`,
+    content: '<h1>Error</h1><p>Ooops. Something went wrong</p>',
     code: 500,
     timestamp: new Date(),
   }
@@ -64,6 +64,10 @@ function scrollToAnchor(name) {
 }
 
 function noop() {}
+
+function normalizePathname(pathname) {
+  return '/' + pathname.replace(/\/+/g, '/').replace(/^\/|\/$/g, '')
+}
 
 export default function pill(selector, options) {
   if (typeof window.history.pushState !== 'function') {
@@ -98,8 +102,9 @@ export default function pill(selector, options) {
   updateState({scroll: window.scrollY}, url, page.title, false)
 
   function goto(url, push) {
-    if (url.pathname in pages) {
-      var page = pages[url.pathname]
+    var pathname = normalizePathname(url.pathname)
+    if (pathname in pages) {
+      var page = pages[pathname]
 
       if (shouldReload(page) !== true) {
         render(url, page, push)
@@ -125,7 +130,7 @@ export default function pill(selector, options) {
 
       var page = fromResponse(selector, res, text)
 
-      pages[url.pathname] = page
+      pages[pathname] = page
 
       page.status = res.status
       page.timestamp = new Date()
