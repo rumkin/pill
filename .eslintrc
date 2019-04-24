@@ -1,6 +1,6 @@
 {
   "env": {
-    "node": true,
+    "browser": true,
     "es6": true
   },
   "parserOptions": {
@@ -10,6 +10,7 @@
       "experimentalObjectRestSpread": true
     }
   },
+  "extends":"eslint:recommended",
   "rules": {
     "block-scoped-var": 2,
     "brace-style": [2, "stroustrup"],
@@ -41,6 +42,7 @@
     "no-nested-ternary": 2,
     "no-underscore-dangle": 0,
     "comma-dangle": [1, "always-multiline"],
-    "no-shadow": 1
+    "no-shadow": 1,
+    "no-console": 1
   }
 }
