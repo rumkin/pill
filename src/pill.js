@@ -89,7 +89,7 @@ export default function pill(selector, options) {
   var url = new URL(document.location)
   var page = createPage(document.title, element.innerHTML, 200)
   var pages = {}
-  pages[url.pathname] = page
+  pages[normalizePathname(url.pathname)] = page
   function render (url, page, push) {
     updateState(null, url, page.title, push)
     setContent(element, page)
