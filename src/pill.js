@@ -158,7 +158,7 @@ export default function pill(selector, options) {
   }
 
   function onClick (e) {
-    if (e.target.nodeName !== 'A' && !e.target.dataset.pillIgnore) {
+    if (e.target.nodeName !== 'A' || e.target.dataset.pillIgnore) {
       return
     }
 
