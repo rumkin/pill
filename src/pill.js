@@ -158,13 +158,13 @@ export default function pill(selector, options) {
   }
 
   function onClick (e) {
-    if (e.target.nodeName !== 'A' || e.target.dataset.pillIgnore) {
+    if (e.target.nodeName !== 'A') {
       return
     }
 
     var url = new URL(e.target.href, document.location)
 
-    if (! shouldServe(url)) {
+    if (! shouldServe(url, e.target)) {
       return
     }
 
