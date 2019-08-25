@@ -164,7 +164,7 @@ export default function pill(selector, options) {
 
     var url = new URL(e.target.href, document.location)
 
-    if (! shouldServe(url)) {
+    if (! shouldServe(url, e.target)) {
       return
     }
 
