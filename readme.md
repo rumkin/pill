@@ -163,10 +163,6 @@ If you return `false` then the link will be served by browser.
 Determine wether previuosly loaded page should be loaded from server.
 
 
-## Ignoring links
-By default, Pill will catch all links.  To ignore links simply add `data-pill-ignore="true"` to your `a` tag.
-
-
 ## License
 
 MIT © [Rumkin](https://rumk.in)
