@@ -121,7 +121,7 @@ All page-related content should be located inside `#content`. It could be styles
 ## API
 
 ### `pill()`
-```js
+```
 (selector:string, options:Options) -> void
 ```
 
@@ -129,19 +129,19 @@ Initialize pill. Start listening for navigation attempts and history state chang
 content into `selector` element.
 
 ### `Options.onLoading()`
-```js
+```
 (page:Page) -> void
 ```
 Handle loading start.
 
 ### `Options.onReady()`
-```js
+```
 (page:Page) -> void
 ```
 Handle loading finish.
 
 ### `Options.fromError()`
-```js
+```
 (error:Error) -> {title, content}
 ```
 Use it to display notification when something went wrong.
@@ -149,14 +149,14 @@ If an error was thrown while handling request. You still able
 to render content using method `fromError`
 
 ### `Options.shouldServe()`
-```js
+```
 (url:URL, target:HTMLElement ) -> boolean
 ```
 Developer-defined logic to determine whether the URL could be served by Pill. 
 If you return `false` then the link will be served by browser.
 
 ### `Options.shouldReload()`
-```js
+```
 (page) -> boolean
 ```
 
