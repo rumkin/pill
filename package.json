@@ -10,7 +10,7 @@
     "serve": "^10.1.2"
   },
   "scripts": {
-    "start": "npm run build && node copy-files.js && serve -l 8080 -n example",
+    "start": "npm run build:iife && node copy-files.js && serve -l 8080 -n example",
     "clean": "rm -rf dist",
     "build": "npm run build:iife && npm run build:cjs && npm run build:minify && npm run build:checksum",
     "build:iife": "rollup --format iife --name pill -o dist/pill.js src/pill.js",
