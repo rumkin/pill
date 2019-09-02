@@ -152,7 +152,7 @@ to render content using method `fromError`
 ```
 (url:URL, target:HTMLElement ) -> boolean
 ```
-Developer-defined logic to determine whether the URL could be served by Pill. 
+Developer-defined logic to determine whether the URL could be served by Pill.
 If you return `false` then the link will be served by browser.
 
 ### `Options.shouldReload()`
@@ -160,7 +160,7 @@ If you return `false` then the link will be served by browser.
 (page) -> boolean
 ```
 
-Determine wether previuosly loaded page should be loaded from server.
+Determine wether previously loaded page should be loaded from server.
 
 
 ## License
