@@ -162,6 +162,12 @@ If you return `false` then the link will be served by browser.
 
 Determine wether previously loaded page should be loaded from server.
 
+### `Options.onMounting()`
+```
+(page, url) -> void
+```
+
+Fires everytime new content is about to be loaded to the DOM
 
 ## License
 
