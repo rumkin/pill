@@ -76,6 +76,7 @@ export default function pill(selector, options) {
   options = options || {}
   var onReady = options.onReady || noop
   var onLoading = options.onLoading || noop
+  var onMounting = options.onMounting || noop
   var fromError = options.fromError || defaultErrorHandler
   var shouldServe = options.shouldServe || shouldServeDefault
   var shouldReload = options.shouldReload || noop
@@ -92,6 +93,7 @@ export default function pill(selector, options) {
   pages[normalizePathname(url.pathname)] = page
   function render (url, page, push) {
     updateState(null, url, page.title, push)
+    onMounting(page, url)
     setContent(element, page)
     onReady(page)
     if (push && url.hash.length > 1) {

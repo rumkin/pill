@@ -17,14 +17,14 @@ function setContent(root, page) {
 }
 
 function fromResponse(selector, response, text) {
-  const fragment = document.createDocumentFragment()
-  const fragRoot = document.createElement('html')
+  var fragment = document.createDocumentFragment()
+  var fragRoot = document.createElement('html')
   fragment.appendChild(fragRoot)
   fragRoot.innerHTML = text
 
-  const title = fragRoot.querySelector('title').textContent
-  const root = fragRoot.querySelector(selector)
-  const content = root ? root.innerHTML : ''
+  var title = fragRoot.querySelector('title').textContent
+  var root = fragRoot.querySelector(selector)
+  var content = root ? root.innerHTML : ''
 
   return {title: title, content: content}
 }
@@ -41,7 +41,7 @@ function updateState(state, url, title, push) {
 function defaultErrorHandler() {
   return {
     title: 'Error',
-    content: `<h1>Error</h1><p>Ooops. Something went wrong</p>`,
+    content: '<h1>Error</h1><p>Ooops. Something went wrong</p>',
     code: 500,
     timestamp: new Date(),
   }
@@ -49,7 +49,7 @@ function defaultErrorHandler() {
 
 function scrollToAnchor(name) {
   requestAnimationFrame(function () {
-    let anchor
+    var anchor
     if (name in document.anchors) {
       anchor = document.anchors[name]
     }
@@ -65,29 +65,35 @@ function scrollToAnchor(name) {
 
 function noop() {}
 
+function normalizePathname(pathname) {
+  return '/' + pathname.replace(/\/+/g, '/').replace(/^\/|\/$/g, '')
+}
+
 export default function pill(selector, options) {
   if (typeof window.history.pushState !== 'function') {
     return
   }
   options = options || {}
-  const onReady = options.onReady || noop
-  const onLoading = options.onLoading || noop
-  const fromError = options.fromError || defaultErrorHandler
-  const shouldServe = options.shouldServe || shouldServeDefault
-  const shouldReload = options.shouldReload || noop
+  var onReady = options.onReady || noop
+  var onLoading = options.onLoading || noop
+  var onMounting = options.onMounting || noop
+  var fromError = options.fromError || defaultErrorHandler
+  var shouldServe = options.shouldServe || shouldServeDefault
+  var shouldReload = options.shouldReload || noop
 
-  let current = null
+  var current
 
-  const element = document.querySelector(selector)
+  var element = document.querySelector(selector)
   if (! element) {
     throw new Error('Element "' + selector + '" not found')
   }
-  const url = new URL(document.location)
-  const page = createPage(document.title, element.innerHTML, 200)
-  const pages = {}
-  pages[url.pathname] = page
+  var url = new URL(document.location)
+  var page = createPage(document.title, element.innerHTML, 200)
+  var pages = {}
+  pages[normalizePathname(url.pathname)] = page
   function render (url, page, push) {
     updateState(null, url, page.title, push)
+    onMounting(page, url)
     setContent(element, page)
     onReady(page)
     if (push && url.hash.length > 1) {
@@ -97,9 +103,10 @@ export default function pill(selector, options) {
   // Initial scroll
   updateState({scroll: window.scrollY}, url, page.title, false)
 
-  const goto = (url, push) => {
-    if (url.pathname in pages) {
-      const page = pages[url.pathname]
+  function goto(url, push) {
+    var pathname = normalizePathname(url.pathname)
+    if (pathname in pages) {
+      var page = pages[pathname]
 
       if (shouldReload(page) !== true) {
         render(url, page, push)
@@ -109,7 +116,7 @@ export default function pill(selector, options) {
 
     updateState(null, url, url, push)
 
-    const request = current = fetch(url)
+    var request = current = fetch(url)
     .then(function (res) {
       return res.text()
       .then((function(text) {
@@ -120,12 +127,12 @@ export default function pill(selector, options) {
       }))
     })
     .then((function (result) {
-      const res = result.res
-      const text = result.text
+      var res = result.res
+      var text = result.text
 
-      let page = fromResponse(selector, res, text)
+      var page = fromResponse(selector, res, text)
 
-      pages[url.pathname] = page
+      pages[pathname] = page
 
       page.status = res.status
       page.timestamp = new Date()
@@ -136,12 +143,12 @@ export default function pill(selector, options) {
       current = null
       render(url, page, false)
     }))
-    .catch((error) => {
+    .catch(function (error) {
       if (request === current) {
         current = null
       }
 
-      const page = fromError(error)
+      var page = fromError(error)
       setContent(element, page)
       onReady(page)
 
@@ -157,9 +164,9 @@ export default function pill(selector, options) {
       return
     }
 
-    const url = new URL(e.target.href, document.location)
+    var url = new URL(e.target.href, document.location)
 
-    if (! shouldServe(url)) {
+    if (! shouldServe(url, e.target)) {
       return
     }
 
@@ -176,7 +183,7 @@ export default function pill(selector, options) {
     })
   }
 
-  let scrollDebounceTimeout
+  var scrollDebounceTimeout
   function onScroll() {
     if (scrollDebounceTimeout) {
       return

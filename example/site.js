@@ -1,4 +1,4 @@
-import pill from '/pill.js'
+import pill from './pill.js'
 
 const indicator = document.getElementById('indicator');
 
@@ -16,5 +16,8 @@ pill('#page', {
     timeout = setTimeout(() => {
       indicator.style.display = 'none';
     }, 1000)
+  },
+  onMounting(){
+    console.log('updating content');
   }
-})
+});
