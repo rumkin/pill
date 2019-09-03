@@ -146,13 +146,13 @@ Handle loading start.
 #### `PillOptions.onMounting()`
 ```
 (page:Page, url:URL) -> void
+```
 
 #### `PillOptions.onReady()`
 ```
 (page:Page) -> void
 ```
 Handle loading finish.
-```
 
 ### Other options
 
