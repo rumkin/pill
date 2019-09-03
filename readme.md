@@ -59,16 +59,17 @@ pill('#content') // Yep, that's it.
 3. Create loading indicator element.
 4. Initialize pill:
   ```javascript
-  const loadingIndicator = document.querySelector('#indicator')
-
+  // Get loading indicator element
+  const indicator = document.querySelector('#indicator')
+  // Assign Pill to specified selector
   pill('#content', {
     onLoading() {
       // Show loading indicator
-      loadingIndicator.style.display = 'initial'
+      indicator.style.display = 'initial'
     },
     onReady() {
       // Hide loading indicator
-      loadingIndicator.style.display = 'none'
+      indicator.style.display = 'none'
     }
   })
   ```
@@ -98,7 +99,7 @@ pill('#content') // Yep, that's it.
       <!-- page content here -->
     </div>
     <script>
-      const loadingIndicator = document.querySelector('#indicator')
+      const indicator = document.querySelector('#indicator')
 
       pill('#content', {
         onLoading() {
@@ -122,25 +123,33 @@ All page-related content should be located inside `#content`. It could be styles
 
 ### `pill()`
 ```
-(selector:string, options:Options) -> void
+(selector:string, options:PillOptions) -> void
 ```
 
 Initialize pill. Start listening for navigation attempts and history state changes. Puts loaded
 content into `selector` element.
 
-### `Options.onLoading()`
+### Hooks
+#### `PillOptions.onLoading()`
 ```
 (page:Page) -> void
 ```
 Handle loading start.
 
-### `Options.onReady()`
+#### `PillOptions.onReady()`
 ```
 (page:Page) -> void
 ```
 Handle loading finish.
 
-### `Options.fromError()`
+#### `PillOptions.onMounting()`
+```
+(page:Page, url:URL) -> void
+```
+
+### Other options
+
+### `PillOptions.fromError()`
 ```
 (error:Error) -> {title, content}
 ```
@@ -148,26 +157,30 @@ Use it to display notification when something went wrong.
 If an error was thrown while handling request. You still able
 to render content using method `fromError`
 
-### `Options.shouldServe()`
+Determine wether previously loaded page should be loaded from server.
+
+### `PillOptions.getKeyFromUrl()`
 ```
-(url:URL, target:HTMLElement ) -> boolean
+(url:URL) -> String
+```
+
+Get cache key from URL. It's useful when URL contains query params which
+are unknown to server and could not affect response. By default any
+new pathname and search string combination will cause new request.
+
+### `PillOptions.shouldReload()`
+```
+(page:Page) -> boolean
+```
+
+Fires everytime new content is about to be loaded to the DOM.
+
+### `PillOptions.shouldServe()`
+```
+(url:URL, target:HTMLElement) -> boolean
 ```
 Developer-defined logic to determine whether the URL could be served by Pill.
 If you return `false` then the link will be served by browser.
-
-### `Options.shouldReload()`
-```
-(page) -> boolean
-```
-
-Determine wether previously loaded page should be loaded from server.
-
-### `Options.onMounting()`
-```
-(page, url) -> void
-```
-
-Fires everytime new content is about to be loaded to the DOM
 
 ## License
 

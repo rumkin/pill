@@ -7,7 +7,7 @@ function createPage(title, content, status, timestamp) {
     title: title || '',
     content: content || '',
     status: status || 0,
-    timestamp: timestamp || new Date()
+    timestamp: timestamp || new Date(),
   }
 }
 
@@ -69,6 +69,10 @@ function normalizePathname(pathname) {
   return '/' + pathname.replace(/\/+/g, '/').replace(/^\/|\/$/g, '')
 }
 
+function keyFromUrlDefault(url) {
+  return normalizePathname(url.pathname) + url.search
+}
+
 export default function pill(selector, options) {
   if (typeof window.history.pushState !== 'function') {
     return
@@ -77,20 +81,22 @@ export default function pill(selector, options) {
   var onReady = options.onReady || noop
   var onLoading = options.onLoading || noop
   var onMounting = options.onMounting || noop
+  var keyFromUrl = options.keyFromUrl || keyFromUrlDefault
   var fromError = options.fromError || defaultErrorHandler
   var shouldServe = options.shouldServe || shouldServeDefault
   var shouldReload = options.shouldReload || noop
 
-  var current
+  var current = 0
+  var isLoading = false
 
   var element = document.querySelector(selector)
   if (! element) {
     throw new Error('Element "' + selector + '" not found')
   }
-  var url = new URL(document.location)
-  var page = createPage(document.title, element.innerHTML, 200)
-  var pages = {}
-  pages[normalizePathname(url.pathname)] = page
+  var currentUrl = new URL(document.location)
+  var currentPage = createPage(document.title, element.innerHTML, 200)
+  var cache = {}
+  cache[keyFromUrl(currentUrl)] = currentPage
   function render (url, page, push) {
     updateState(null, url, page.title, push)
     onMounting(page, url)
@@ -101,22 +107,24 @@ export default function pill(selector, options) {
     }
   }
   // Initial scroll
-  updateState({scroll: window.scrollY}, url, page.title, false)
+  updateState({scroll: window.scrollY}, currentUrl, currentPage.title, false)
 
   function goto(url, push) {
-    var pathname = normalizePathname(url.pathname)
-    if (pathname in pages) {
-      var page = pages[pathname]
+    var cacheKey = keyFromUrl(url)
+    if (cacheKey in cache) {
+      var cachedPage = cache[cacheKey]
 
-      if (shouldReload(page) !== true) {
-        render(url, page, push)
+      if (shouldReload(cachedPage) !== true) {
+        render(url, cachedPage, push)
         return
       }
     }
 
     updateState(null, url, url, push)
 
-    var request = current = fetch(url)
+    var requestId = ++current
+
+    fetch(url)
     .then(function (res) {
       return res.text()
       .then((function(text) {
@@ -126,36 +134,38 @@ export default function pill(selector, options) {
         }
       }))
     })
-    .then((function (result) {
+    .finally(function() {
+      isLoading = false
+    })
+    .then(function (result) {
       var res = result.res
       var text = result.text
 
       var page = fromResponse(selector, res, text)
 
-      pages[pathname] = page
+      cache[cacheKey] = page
 
       page.status = res.status
       page.timestamp = new Date()
 
-      if (request !== current) {
+      if (requestId !== current) {
         return
       }
-      current = null
       render(url, page, false)
-    }))
+    })
     .catch(function (error) {
-      if (request === current) {
-        current = null
+      if (requestId === current) {
+        var page = fromError(error)
+        render(url, page, false)
       }
-
-      var page = fromError(error)
-      setContent(element, page)
-      onReady(page)
 
       throw error
     })
+    // Handle errors, including received from previous requesterror handling
+    // eslint-disable-next-line no-console
     .catch(console.error)
 
+    isLoading = true
     onLoading(url)
   }
 
@@ -173,7 +183,7 @@ export default function pill(selector, options) {
     e.preventDefault()
 
     window.scrollTo(0, 0)
-    goto(url, current === null)
+    goto(url, ! isLoading)
   }
 
   function onPopState(e) {
