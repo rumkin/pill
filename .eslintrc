@@ -11,6 +11,15 @@
     }
   },
   "extends":"eslint:recommended",
+  "overrides": [{
+    "files": "bin/*.js",
+    "env": {
+      "node": true
+    },
+    "rules": {
+      "no-console": 0
+    }
+  }],
   "rules": {
     "block-scoped-var": 2,
     "brace-style": [2, "stroustrup"],
