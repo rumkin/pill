@@ -130,21 +130,28 @@ Initialize pill. Start listening for navigation attempts and history state chang
 content into `selector` element.
 
 ### Hooks
+
+#### `PillOptions.onError()`
+```
+(error) -> void
+```
+Handle page loading exception. By default is `console.error`.
+
 #### `PillOptions.onLoading()`
 ```
 (page:Page) -> void
 ```
 Handle loading start.
 
+#### `PillOptions.onMounting()`
+```
+(page:Page, url:URL) -> void
+
 #### `PillOptions.onReady()`
 ```
 (page:Page) -> void
 ```
 Handle loading finish.
-
-#### `PillOptions.onMounting()`
-```
-(page:Page, url:URL) -> void
 ```
 
 ### Other options

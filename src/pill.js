@@ -81,6 +81,7 @@ export default function pill(selector, options) {
   var onReady = options.onReady || noop
   var onLoading = options.onLoading || noop
   var onMounting = options.onMounting || noop
+  var onError = options.onError || console.error.bind(console)
   var keyFromUrl = options.keyFromUrl || keyFromUrlDefault
   var fromError = options.fromError || defaultErrorHandler
   var shouldServe = options.shouldServe || shouldServeDefault
@@ -162,8 +163,7 @@ export default function pill(selector, options) {
       throw error
     })
     // Handle errors, including received from previous requesterror handling
-    // eslint-disable-next-line no-console
-    .catch(console.error)
+    .catch(onError)
 
     isLoading = true
     onLoading(url)
