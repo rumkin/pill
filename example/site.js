@@ -1,8 +1,6 @@
-import pill from './pill.js'
+const indicator = document.getElementById('indicator')
 
-const indicator = document.getElementById('indicator');
-
-let timeout = 0;
+let timeout = 0
 pill('#page', {
   onLoading() {
     if (timeout) {
@@ -10,14 +8,14 @@ pill('#page', {
       timeout = 0
     }
 
-    indicator.style.display = 'block';
+    indicator.style.display = 'block'
   },
   onReady() {
     timeout = setTimeout(() => {
-      indicator.style.display = 'none';
+      indicator.style.display = 'none'
     }, 1000)
   },
   onMounting(){
-    console.log('updating content');
+    console.log('updating content')
   }
-});
+})

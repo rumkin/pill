@@ -17,3 +17,6 @@ pill/
 *.pid
 *.lock
 *.pid.lock
+
+example/pill.js
+example/pill.min.js
