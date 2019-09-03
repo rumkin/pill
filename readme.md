@@ -148,6 +148,8 @@ Handle loading start.
 (page:Page, url:URL) -> void
 ```
 
+Fires everytime new content is about to be loaded to the DOM.
+
 #### `PillOptions.onReady()`
 ```
 (page:Page) -> void
@@ -164,8 +166,6 @@ Use it to display notification when something went wrong.
 If an error was thrown while handling request. You still able
 to render content using method `fromError`
 
-Determine wether previously loaded page should be loaded from server.
-
 ### `PillOptions.getKeyFromUrl()`
 ```
 (url:URL) -> String
@@ -177,14 +177,14 @@ new pathname and search string combination will cause new request.
 
 ### `PillOptions.shouldReload()`
 ```
-(page:Page) -> boolean
+(page:Page) -> Boolean
 ```
 
-Fires everytime new content is about to be loaded to the DOM.
+Determine wether previously loaded page should be loaded from server.
 
 ### `PillOptions.shouldServe()`
 ```
-(url:URL, target:HTMLElement) -> boolean
+(url:URL, target:HTMLElement) -> Boolean
 ```
 Developer-defined logic to determine whether the URL could be served by Pill.
 If you return `false` then the link will be served by browser.
