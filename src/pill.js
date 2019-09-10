@@ -80,6 +80,7 @@ export default function pill(selector, options) {
   options = options || {}
   var onReady = options.onReady || noop
   var onLoading = options.onLoading || noop
+  var onUnmounting = options.onUnmounting || noop
   var onMounting = options.onMounting || noop
   var onError = options.onError || console.error.bind(console)
   var keyFromUrl = options.keyFromUrl || keyFromUrlDefault
@@ -99,6 +100,7 @@ export default function pill(selector, options) {
   var cache = {}
   cache[keyFromUrl(currentUrl)] = currentPage
   function render (url, page, push) {
+    onUnmounting(page, url, element)
     updateState(null, url, page.title, push)
     onMounting(page, url)
     setContent(element, page)
