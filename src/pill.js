@@ -102,9 +102,9 @@ export default function pill(selector, options) {
   function render (url, page, push) {
     onUnmounting(page, url, element)
     updateState(null, url, page.title, push)
-    onMounting(page, url)
+    onMounting(page, url, element)
     setContent(element, page)
-    onReady(page)
+    onReady(page, element)
     if (push && url.hash.length > 1) {
       scrollToAnchor(url.hash.slice(1))
     }
