@@ -2,13 +2,16 @@
 <html>
   <head>
     <title>Page A</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
     <link rel="stylesheet" type="text/css" href="/style.css" />
   </head>
   <body>
     <div id="indicator">Loading...</div>
     <!-- PAGE CONTENT START -->
-    <div id='page'>
+    <div id="page">
       <nav>
         <a href="/">Home</a>
         <a href="/pages/a">Page A</a>
@@ -18,9 +21,58 @@
       <p>
         Page A content.
       </p>
+      <form>
+        <div>
+          <label>
+            Username:
+            <input type="text" name="username" />
+          </label>
+        </div>
+        <div>
+          <label>
+            Age:
+            <input type="number" name="age" />
+          </label>
+        </div>
+        <div>
+          <label>
+            Phone:
+            <input type="tel" name="telephone" />
+          </label>
+        </div>
+        <div>
+          <label>
+            Email:
+            <input type="email" name="email" />
+          </label>
+        </div>
+        <div>
+          <label>
+            Save
+            <input type="checkbox" name="save" />
+          </label>
+        </div>
+        <div>
+          Say something
+          <textarea name="something"></textarea>
+        </div>
+        <div>
+          <fieldset>
+            <label>
+              Yes
+              <input type="radio" name="cool" value="yes" />
+            </label>
+            <label>
+              No
+              <input type="radio" name="cool" value="no" />
+            </label>
+          </fieldset>
+        </div>
+      </form>
+      <script></script>
     </div>
     <!-- PAGE CONTENT END -->
-    <script src='/pill.js'></script>
-    <script src='/site.js'></script>
+    <script src="/pill.js"></script>
+    <script src="/site.js"></script>
   </body>
 </html>
