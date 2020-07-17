@@ -1,3 +1,24 @@
+var CUSTOMEVENTS = {
+  onReady: 'pill:ready',
+  onLoading: 'pill:loading',
+  onUnmounting: 'pill:unmounting',
+  onMounting: 'pill:mounting',
+  onError: 'pill:error',
+  fromError: 'pill:fromerror',
+  shouldServe: 'pill:shouldserve',
+  shouldReload: 'pill:shouldreload',
+}
+
+function dispatchEvent(_name, info){
+  var event = new CustomEvent(_name, {
+    detail:{
+      pill: self,
+      ...info
+    }
+  });
+  document.dispatchEvent(event);
+}
+
 function shouldServeDefault(href) {
   return href.origin === location.origin
 }
@@ -74,6 +95,7 @@ function keyFromUrlDefault(url) {
 }
 
 export default function pill(selector, options) {
+  var self = this;
   if (typeof window.history.pushState !== 'function') {
     return
   }
@@ -100,10 +122,13 @@ export default function pill(selector, options) {
   var cache = {}
   cache[keyFromUrl(currentUrl)] = currentPage
   function render (url, page, push) {
+    dispatchEvent(CUSTOMEVENTS.onUnmounting, {url, push, cache, page, element});
     onUnmounting(page, url, element)
     updateState(null, url, page.title, push)
+    dispatchEvent(CUSTOMEVENTS.onMounting, {url, push, cache, page, element});
     onMounting(page, url, element)
     setContent(element, page)
+    dispatchEvent(CUSTOMEVENTS.onReady, {url, push, cache, page, element});
     onReady(page, element)
     if (push && url.hash.length > 1) {
       scrollToAnchor(url.hash.slice(1))
@@ -118,6 +143,7 @@ export default function pill(selector, options) {
     if (cacheKey in cache) {
       var cachedPage = cache[cacheKey]
 
+      dispatchEvent(CUSTOMEVENTS.shouldReload, {url, push, cachedPage, cache, page, element});
       if (shouldReload(cachedPage) !== true) {
         render(url, cachedPage, push)
         return
@@ -159,6 +185,7 @@ export default function pill(selector, options) {
     })
     .catch(function (error) {
       if (requestId === current) {
+        dispatchEvent(CUSTOMEVENTS.fromError, {url, push, cachedPage, cache, page, element, error});
         var page = fromError(error)
         render(url, page, false)
       }
@@ -166,9 +193,13 @@ export default function pill(selector, options) {
       throw error
     })
     // Handle errors, including received from previous requesterror handling
-    .catch(onError)
+    .catch(function(error){
+      dispatchEvent(CUSTOMEVENTS.onError, {url, push, cachedPage, cache, page, element, error});
+      onError(error);
+    })
 
     isLoading = true
+    dispatchEvent(CUSTOMEVENTS.onLoading, {url, push, cachedPage, cache, page, element});
     onLoading(url)
   }
 
@@ -178,7 +209,7 @@ export default function pill(selector, options) {
     }
 
     var url = new URL(e.target.href, document.location)
-
+    dispatchEvent(CUSTOMEVENTS.shouldServe, {url, originalEvent: e});
     if (! shouldServe(url, e.target)) {
       return
     }

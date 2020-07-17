@@ -62,3 +62,13 @@ function preserveFormPlugin(element) {
     localStorage.setItem(key, JSON.stringify(values))
   }
 }
+
+document.addEventListener('pill:ready', appendEvent)
+document.addEventListener('pill:mounting', appendEvent)
+document.addEventListener('pill:unmounting', appendEvent)
+document.addEventListener('pill:loading', appendEvent)
+document.addEventListener('pill:error', appendEvent)
+
+function appendEvent(event){
+  console.info(event)
+}
