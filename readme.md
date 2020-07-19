@@ -145,9 +145,8 @@ Handle loading start.
 
 #### `PillOptions.onMounting()`
 ```
-(page:Page, url:URL) -> void
+(page:Page, url:URL, element:HTMLElement) -> void
 ```
-
 Fires everytime new content is about to be loaded to the DOM.
 
 #### `PillOptions.onReady()`
@@ -155,6 +154,12 @@ Fires everytime new content is about to be loaded to the DOM.
 (page:Page) -> void
 ```
 Handle loading finish.
+
+#### `PillOptions.onUnmounting()`
+```
+(page:Page, url:URL, element:HTMLElement) -> void
+```
+Fires everytime content is about to be removed from the DOM.
 
 ### Other options
 
