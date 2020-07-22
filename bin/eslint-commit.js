@@ -29,8 +29,11 @@ async function main() {
       filePath: file,
     })
 
-    if (result[0].errorCount > 0) {
-      hasErrors = true
+    for (const record of result) {
+      if (record.errorCount > 0) {
+        hasErrors = true
+        break
+      }
     }
 
     const report = formatter.format(result)
