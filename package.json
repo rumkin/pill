@@ -4,8 +4,11 @@
   "version": "1.4.0",
   "main": "dist/node/pill.js",
   "devDependencies": {
+    "@codegoods/eslint-config-base": "^1.0.2",
     "babel-minify": "^0.5.0",
     "copy": "^0.3.2",
+    "eslint": "^7.5.0",
+    "husky": "^4.2.5",
     "rollup": "^1.7.4",
     "serve": "^10.1.2"
   },
@@ -17,12 +20,13 @@
     "build:cjs": "rollup --format cjs --name pill -o dist/node/pill.js src/pill.js",
     "build:minify": "babel-minify -o dist/pill.min.js dist/pill.js",
     "build:checksum": "node bin/checksum.js dist dist/*.js > dist/checksum.txt",
-    "prepublishOnly": "npm run clean && npm run build"
+    "prepublishOnly": "npm run lint && npm run clean && npm run build",
+    "lint": "eslint src",
+    "lint:fix": "eslint --fix src"
   },
   "directories": {
     "example": "example"
   },
-  "dependencies": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/rumkin/pill.git"
@@ -38,5 +42,10 @@
   "bugs": {
     "url": "https://github.com/rumkin/pill/issues"
   },
-  "homepage": "https://github.com/rumkin/pill#readme"
+  "homepage": "https://github.com/rumkin/pill#readme",
+  "husky": {
+    "hooks": {
+      "pre-commit": "bin/eslint-commit.js"
+    }
+  }
 }

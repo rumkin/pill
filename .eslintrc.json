@@ -1,0 +1,26 @@
+{
+  "extends":"@codegoods/base",
+  "env": {
+    "browser": true,
+    "es6": true
+  },
+  "parserOptions": {
+    "sourceType": "module",
+    "ecmaVersion": 6
+  },
+  "overrides": [{
+    "files": "bin/*.js",
+    "env": {
+      "node": true
+    },
+    "parserOptions": {
+      "ecmaVersion": 8
+    },
+    "rules": {
+      "no-console": 0
+    }
+  }],
+  "rules": {
+    "no-console": "warn"
+  }
+}
