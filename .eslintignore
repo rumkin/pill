@@ -1,3 +1,5 @@
 /dist/
 /node_modules/
-/example/
+
+/example/pill.js
+/example/pill.min.js
