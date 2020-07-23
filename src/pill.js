@@ -87,6 +87,7 @@ export default function pill(selector, options) {
   var fromError = options.fromError || defaultErrorHandler
   var shouldServe = options.shouldServe || shouldServeDefault
   var shouldReload = options.shouldReload || noop
+  var listenClickEventOn = options.listenClickEventOn || 'body'
 
   var current = 0
   var isLoading = false
@@ -104,7 +105,7 @@ export default function pill(selector, options) {
     updateState(null, url, page.title, push)
     onMounting(page, url, element)
     setContent(element, page)
-    onReady(page, element)
+    onReady(page, url, element)
     if (push && url.hash.length > 1) {
       scrollToAnchor(url.hash.slice(1))
     }
@@ -117,7 +118,7 @@ export default function pill(selector, options) {
     if (cacheKey in cache) {
       var cachedPage = cache[cacheKey]
 
-      if (shouldReload(cachedPage) !== true) {
+      if (shouldReload(cachedPage, element) !== true) {
         render(url, cachedPage, push)
         return
       }
@@ -154,11 +155,13 @@ export default function pill(selector, options) {
       if (requestId !== current) {
         return
       }
+      currentPage = page
       render(url, page, false)
     })
     .catch(function (error) {
       if (requestId === current) {
         var page = fromError(error)
+        currentPage = page
         render(url, page, false)
       }
 
@@ -168,14 +171,13 @@ export default function pill(selector, options) {
     .catch(onError)
 
     isLoading = true
-    onLoading(url)
+    onLoading(currentPage, url, element)
   }
 
   function onClick (e) {
     if (e.target.nodeName !== 'A') {
       return
     }
-
     var url = new URL(e.target.href, document.location)
 
     if (! shouldServe(url, e.target)) {
@@ -183,8 +185,9 @@ export default function pill(selector, options) {
     }
 
     e.preventDefault()
-
+    // Restore scroll
     window.scrollTo(0, 0)
+    // `! isLoading` specify wether new page should stop the request and replace url in the address bar.
     goto(url, ! isLoading)
   }
 
@@ -207,7 +210,8 @@ export default function pill(selector, options) {
     }, 100)
   }
 
-  document.body.addEventListener('click', onClick)
+  document.querySelector(listenClickEventOn)
+  .addEventListener('click', onClick)
   window.addEventListener('popstate', onPopState)
   window.addEventListener('scroll', onScroll)
 }
