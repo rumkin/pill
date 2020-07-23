@@ -139,7 +139,7 @@ Handle page loading exception. By default is `console.error`.
 
 #### `PillOptions.onLoading()`
 ```
-(page:Page) -> void
+(page:Page, url:URL, element:HTMLElement) -> void
 ```
 Handle loading start.
 
@@ -151,7 +151,7 @@ Fires everytime new content is about to be loaded to the DOM.
 
 #### `PillOptions.onReady()`
 ```
-(page:Page) -> void
+(page:Page, url:URL, element:HTMLElement) -> void
 ```
 Handle loading finish.
 
@@ -162,6 +162,14 @@ Handle loading finish.
 Fires everytime content is about to be removed from the DOM.
 
 ### Other options
+
+
+### `PillOptions.listenClickEventOn`
+```
+String
+```
+
+CSS selector which determine which element should Pill click handler be binded on. Default value is `"body"`.
 
 ### `PillOptions.fromError()`
 ```
@@ -182,7 +190,7 @@ new pathname and search string combination will cause new request.
 
 ### `PillOptions.shouldReload()`
 ```
-(page:Page) -> Boolean
+(page:Page, element:HTMLElement) -> Boolean
 ```
 
 Determine wether previously loaded page should be loaded from server.
