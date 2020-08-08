@@ -16,7 +16,7 @@ pill('#page', {
   onUnmounting(page, url, element) {
     preserveFormPlugin(element)
   },
-  onReady(page, url, element) {
+  onReady(page, element) {
     // Delay to simulate long content loading
     timeout = setTimeout(() => {
       indicator.style.display = 'none'
