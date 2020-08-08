@@ -1,3 +1,5 @@
+/* globals pill */
+/* eslint-disable no-console */
 const indicator = document.getElementById('indicator')
 
 let timeout = 0
@@ -12,22 +14,23 @@ pill('#page', {
     indicator.style.display = 'block'
   },
   onUnmounting(page, url, element) {
-    PreserveFormPlugin(element)
+    preserveFormPlugin(element)
   },
   onReady(page, element) {
     // Delay to simulate long content loading
     timeout = setTimeout(() => {
       indicator.style.display = 'none'
     }, 1000)
-    PopulateFormPlugin(element)
+    populateFormPlugin(element)
   },
   onMounting() {
     console.log('updating content')
-  }
+  },
+  listenClickEventOn: '#page',
 })
 
-const PopulateFormPlugin = element =>{
-  const key = location.pathname;
+function populateFormPlugin(element) {
+  const key = location.pathname
   const fields = Array.from(element.querySelectorAll('input, textarea, select'))
   if (fields.length > 0) {
     const obj = JSON.parse(localStorage.getItem(key) || '[]')
@@ -35,23 +38,25 @@ const PopulateFormPlugin = element =>{
       const input = document.querySelector('[name=' + field.fieldName + ']')
       if (input.type === 'checkbox' || input.type === 'radio') {
         input.checked = field.value
-      } else if (input.nodeName === 'TEXTAREA') {
+      }
+      else if (input.nodeName === 'TEXTAREA') {
         input.textContent = field.value
-      } else {
+      }
+      else {
         input.value = field.value
       }
     })
   }
 }
 
-const PreserveFormPlugin = (element) =>{
+function preserveFormPlugin(element) {
   const key = location.pathname
   const fields = Array.from(element.querySelectorAll('input, textarea, select'))
   if (fields.length > 0) {
     const values = fields.map((val) => {
       return {
         fieldName: val.name,
-        value: val.type == 'checkbox' || val.type == 'radio' ? val.checked : val.value
+        value: val.type === 'checkbox' || val.type === 'radio' ? val.checked : val.value,
       }
     })
     localStorage.setItem(key, JSON.stringify(values))

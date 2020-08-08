@@ -2,8 +2,8 @@
 .eslintignore
 .editorconfig
 
-bin/
-example/
-local/
-src/
-tmp/
+/bin/
+/example/
+/local/
+/src/
+/tmp/

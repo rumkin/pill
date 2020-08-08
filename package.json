@@ -1,7 +1,7 @@
 {
   "name": "pill",
   "description": "Pill dynamic content loading for static sites.",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "main": "dist/node/pill.js",
   "devDependencies": {
     "@codegoods/eslint-config-base": "^1.0.2",
