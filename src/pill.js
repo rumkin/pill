@@ -8,9 +8,9 @@ var EVENTS = {
 
 function dispatchEvent(name, info){
   var event = new CustomEvent(name, {
-    detail: info
-  });
-  document.dispatchEvent(event);
+    detail: info,
+  })
+  document.dispatchEvent(event)
 }
 
 function shouldServeDefault(href) {
@@ -119,21 +119,21 @@ export default function pill(selector, options) {
       page,
       url,
       element,
-    });
+    })
     onUnmounting(page, url, element)
     updateState(null, url, page.title, push)
     dispatchEvent(EVENTS.onMounting, {
       page,
       url,
       element,
-    });
+    })
     onMounting(page, url, element)
     setContent(element, page)
     dispatchEvent(EVENTS.onReady, {
       page,
       url,
       element,
-    });
+    })
     onReady(page, element)
     if (push && url.hash.length > 1) {
       scrollToAnchor(url.hash.slice(1))
@@ -198,20 +198,18 @@ export default function pill(selector, options) {
     // Handle errors, including received from previous requesterror handling
     .catch(function(error){
       dispatchEvent(EVENTS.onError, {
-        page,
         url,
         element,
         error,
-      });
-      onError(error);
+      })
+      onError(error)
     })
 
     isLoading = true
     dispatchEvent(EVENTS.onLoading, {
-      page,
       url,
       element,
-    });
+    })
     onLoading(url)
   }
 

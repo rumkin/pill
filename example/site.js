@@ -72,3 +72,4 @@ document.addEventListener('pill:error', appendEvent)
 function appendEvent(event){
   console.info(event)
 }
+
