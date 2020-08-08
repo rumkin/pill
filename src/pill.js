@@ -109,8 +109,9 @@ export default function pill(selector, options) {
       scrollToAnchor(url.hash.slice(1))
     }
   }
+
   // Initial scroll
-  updateState({scroll: window.scrollY}, currentUrl, currentPage.title, false)
+  updateState({scrollX: window.scrollX, scrollY: window.scrollY}, currentUrl, currentPage.title, false)
 
   function goto(url, push) {
     var cacheKey = keyFromUrl(url)
@@ -191,7 +192,9 @@ export default function pill(selector, options) {
   function onPopState(e) {
     goto(new URL(document.location), false)
     requestAnimationFrame(function() {
-      window.scrollTo(0, e.state.scroll || 0)
+      var scrollY = e.state && e.state.scrollY || 0
+      var scrollX = e.state && e.state.scrollX || 0
+      window.scrollTo(scrollX, scrollY)
     })
   }
 
@@ -202,7 +205,7 @@ export default function pill(selector, options) {
     }
 
     scrollDebounceTimeout = setTimeout(function () {
-      updateState({scroll: window.scrollY}, document.location, document.title, false)
+      updateState({scrollX: window.scrollX, scrollY: window.scrollY}, document.location, document.title, false)
       scrollDebounceTimeout = null
     }, 100)
   }
