@@ -14,6 +14,10 @@ Pill adds dynamic content loading to static sites and makes content loading
 smooth for users. It's pretty small only _1 KiB_ minified and gzipped. It fits perfectly
 for static sites with WebComponents.
 
+* 🦋 **Lightweight**: `1 KiB` gzipped.
+* 🥤 **Easy-to-use**: only one function call.
+* 🌪 **Powerful API**: hooks and callbacks could modify the default behavior.
+
 > Pill development started with the [tweet](https://twitter.com/sitnikcode/status/1109626507331338240)
 by Andrey Sitnik [@ai](https://github.com/ai).
 
@@ -33,6 +37,7 @@ pill('#content') // Yep, that's it.
 
 * [Install](#install)
 * [Usage](#usage)
+* [Corner cases](#corner-cases)
 * [API](#api)
 * [License](#license)
 
@@ -118,6 +123,13 @@ pill('#content') // Yep, that's it.
 
 Each document of the site should surround `#content` element with the same HTML.
 All page-related content should be located inside `#content`. It could be styles, scripts, etc.
+
+## Corner Cases
+
+### No script inside of the content element
+
+Script elements placed inside of your content element wouldn't be evaluated after loading. You should place all scripts on top of yout page or run JS manually. This behavior prevents your site
+from memory licks and race conditions caused by inner scripts different lifetime.
 
 ## API
 
