@@ -155,6 +155,13 @@ Fires everytime new content is about to be loaded to the DOM.
 ```
 Handle loading finish.
 
+#### `PillOptions.onUnmounting()`
+```
+(page:Page, url:URL, element:HTMLElement) -> void
+```
+Fires everytime content is about to be removed from the DOM.
+
+
 ### Other options
 
 ### `PillOptions.fromError()`
