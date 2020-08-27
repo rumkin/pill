@@ -128,7 +128,8 @@ All page-related content should be located inside `#content`. It could be styles
 
 ### No script inside of the content element
 
-Script elements placed inside of your content element wouldn't be evaluated after loading. You should place all scripts on top of yout page or run JS manually. This behavior prevents your site
+Script elements placed inside of your content element wouldn't be evaluated after loading.
+You should place all scripts on top of your page or run JS manually. This behavior prevents your site
 from memory licks and race conditions caused by inner scripts different lifetime.
 
 ## API
