@@ -161,6 +161,7 @@ Handle loading finish.
 ```
 Fires everytime content is about to be removed from the DOM.
 
+
 ### Other options
 
 ### `PillOptions.fromError()`

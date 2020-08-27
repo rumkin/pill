@@ -1,3 +1,18 @@
+var EVENTS = {
+  onReady: 'pill:ready',
+  onLoading: 'pill:loading',
+  onUnmounting: 'pill:unmounting',
+  onMounting: 'pill:mounting',
+  onError: 'pill:error',
+}
+
+function dispatchEvent(name, info){
+  var event = new CustomEvent(name, {
+    detail: info,
+  })
+  document.dispatchEvent(event)
+}
+
 function shouldServeDefault(href) {
   return href.origin === location.origin
 }
@@ -100,10 +115,25 @@ export default function pill(selector, options) {
   var cache = {}
   cache[keyFromUrl(currentUrl)] = currentPage
   function render (url, page, push) {
+    dispatchEvent(EVENTS.onUnmounting, {
+      page,
+      url,
+      element,
+    })
     onUnmounting(page, url, element)
     updateState(null, url, page.title, push)
+    dispatchEvent(EVENTS.onMounting, {
+      page,
+      url,
+      element,
+    })
     onMounting(page, url, element)
     setContent(element, page)
+    dispatchEvent(EVENTS.onReady, {
+      page,
+      url,
+      element,
+    })
     onReady(page, element)
     if (push && url.hash.length > 1) {
       scrollToAnchor(url.hash.slice(1))
@@ -166,9 +196,20 @@ export default function pill(selector, options) {
       throw error
     })
     // Handle errors, including received from previous requesterror handling
-    .catch(onError)
+    .catch(function(error){
+      dispatchEvent(EVENTS.onError, {
+        url,
+        element,
+        error,
+      })
+      onError(error)
+    })
 
     isLoading = true
+    dispatchEvent(EVENTS.onLoading, {
+      url,
+      element,
+    })
     onLoading(url)
   }
 
@@ -178,7 +219,6 @@ export default function pill(selector, options) {
     }
 
     var url = new URL(e.target.href, document.location)
-
     if (! shouldServe(url, e.target)) {
       return
     }
