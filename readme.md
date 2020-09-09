@@ -129,8 +129,37 @@ All page-related content should be located inside `#content`. It could be styles
 ### No script inside of the content element
 
 Script elements placed inside of your content element wouldn't be evaluated after loading.
-You should place all scripts on top of your page or run JS manually. This behavior prevents your site
-from memory licks and race conditions caused by inner scripts different lifetime.
+You should place all scripts out of your content element (in the `head` or `body`) and run JS manually.
+This behavior prevents your site from memory licks and race conditions caused by inner scripts
+different lifetime. And then you can react on page change with `onReady` hook to change your
+app behavior.
+
+Example:
+
+```html
+<!DOCTYPE html>
+<html>
+  <head></head>
+  <body>
+    <div id="content"></div>
+    <!-- common scripts -->
+    <script src="/scripts/pill.js"></script>
+    <script src="/scripts/app.js"></script>
+    <script>
+      pill('#content', {
+          onMounting(page, url, element) {
+            // Init page, for example bind event listeners, start timers, etc.
+            App.initPage(url, element)
+          },
+          onUnmounting(page, url, element) {
+            // Uninitialise page, for example remove event listeners, stop timers, etc.
+            App.destroyPage(url, element)
+          },
+       })
+       App.initPage(new URL(window.location), document.querySelector('#content'))
+    </script>
+</html>
+```
 
 ## API
 
@@ -141,6 +170,41 @@ from memory licks and race conditions caused by inner scripts different lifetime
 
 Initialize pill. Start listening for navigation attempts and history state changes. Puts loaded
 content into `selector` element.
+
+### Events
+
+You can handle Pill's events by binding handlers on document element:
+
+```js
+document.addEventListener('pill:loading', (e) => {
+  e.detail.page; // Current page
+})
+```
+
+#### `pill:loading` Event
+
+Is emitted when the new page loading has been started. This event wouldn't be emitted
+if page is cached.
+
+Could be replaced with [PillOptions.onLoading()](#pilloptionsonloading) hook.
+
+#### `pill:mounting` Event
+
+Is emitted when new page content is about to be added into the DOM.
+
+Could be replaced with [PillOptions.onMounting()](#pilloptionsonmounting) hook.
+
+#### `pill:ready` Event
+
+Is emitted when the requested page is mounted into DOM and no futher work would be done.
+
+Could be replaced with [PillOptions.onReady()](#pilloptionsonready) hook.
+
+#### `pill:unmounting` Event
+
+Is emitted when new page content is about to be removed from the DOM.
+
+Could be replaced with [PillOptions.onMounting()](#pilloptionsonunmounting) hook.
 
 ### Hooks
 
@@ -156,11 +220,15 @@ Handle page loading exception. By default is `console.error`.
 ```
 Handle loading start.
 
+Could be replaced with [`pill:loading` Event](#pillloading-event) hook.
+
 #### `PillOptions.onMounting()`
 ```
 (page:Page, url:URL, element:HTMLElement) -> void
 ```
 Fires everytime new content is about to be loaded to the DOM.
+
+Could be replaced with [`pill:mounting` Event](#pillmounting-event) hook.
 
 #### `PillOptions.onReady()`
 ```
@@ -168,11 +236,15 @@ Fires everytime new content is about to be loaded to the DOM.
 ```
 Handle loading finish.
 
+Could be replaced with [`pill:ready` Event](#pillready-event) hook.
+
 #### `PillOptions.onUnmounting()`
 ```
 (page:Page, url:URL, element:HTMLElement) -> void
 ```
 Fires everytime content is about to be removed from the DOM.
+
+Could be replaced with [`pill:unmounting` Event](#pillunmounting-event) hook.
 
 ### Other options
 
