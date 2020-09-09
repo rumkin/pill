@@ -220,7 +220,7 @@ Handle page loading exception. By default is `console.error`.
 ```
 Handle loading start.
 
-Could be replaced with [`pill:loading` Event](#pillloading-event) hook.
+Could be replaced with [`pill:loading` Event](#pillloading-event) listener.
 
 #### `PillOptions.onMounting()`
 ```
@@ -228,7 +228,7 @@ Could be replaced with [`pill:loading` Event](#pillloading-event) hook.
 ```
 Fires everytime new content is about to be loaded to the DOM.
 
-Could be replaced with [`pill:mounting` Event](#pillmounting-event) hook.
+Could be replaced with [`pill:mounting` Event](#pillmounting-event) listener.
 
 #### `PillOptions.onReady()`
 ```
@@ -236,7 +236,7 @@ Could be replaced with [`pill:mounting` Event](#pillmounting-event) hook.
 ```
 Handle loading finish.
 
-Could be replaced with [`pill:ready` Event](#pillready-event) hook.
+Could be replaced with [`pill:ready` Event](#pillready-event) listener.
 
 #### `PillOptions.onUnmounting()`
 ```
@@ -244,7 +244,7 @@ Could be replaced with [`pill:ready` Event](#pillready-event) hook.
 ```
 Fires everytime content is about to be removed from the DOM.
 
-Could be replaced with [`pill:unmounting` Event](#pillunmounting-event) hook.
+Could be replaced with [`pill:unmounting` Event](#pillunmounting-event) listener.
 
 ### Other options
 
