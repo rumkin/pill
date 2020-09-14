@@ -1,6 +1,7 @@
 var EVENTS = {
   onReady: 'pill:ready',
   onLoading: 'pill:loading',
+  onInitializated: 'pill:initialized',
   onUnmounting: 'pill:unmounting',
   onMounting: 'pill:mounting',
   onError: 'pill:error',
@@ -94,6 +95,7 @@ export default function pill(selector, options) {
   }
   options = options || {}
   var onReady = options.onReady || noop
+  var onInitialized = options.onInitialized || noop
   var onLoading = options.onLoading || noop
   var onUnmounting = options.onUnmounting || noop
   var onMounting = options.onMounting || noop
@@ -262,4 +264,7 @@ export default function pill(selector, options) {
   document.body.addEventListener('click', onClick)
   window.addEventListener('popstate', onPopState)
   window.addEventListener('scroll', onScroll)
+
+  dispatchEvent(EVENTS.onInitializated, {})
+  onInitialized()
 }

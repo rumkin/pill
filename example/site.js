@@ -4,6 +4,9 @@ const indicator = document.getElementById('indicator')
 
 let timeout = 0
 pill('#page', {
+  onInitialized() {
+    console.log('Pill has been initialized')
+  },
   onLoading() {
     if (timeout) {
       clearTimeout(timeout)
