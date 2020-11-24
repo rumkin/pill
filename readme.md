@@ -164,7 +164,7 @@ Example:
 ## API
 
 ### `pill()`
-```
+```text
 (selector:string, options:PillOptions) -> void
 ```
 
@@ -181,7 +181,33 @@ document.addEventListener('pill:loading', (e) => {
 })
 ```
 
+#### `pill:error` Event
+
+```text
+{
+  detail: {
+    url: URL
+    element: HTMLElement
+    error: Error
+  }
+}
+```
+
+Is emitted when the new page loading has been started. This event wouldn't be emitted
+if page is cached.
+
+Could be replaced with [PillOptions.onLoading()](#pilloptionsonloading) hook.
+
 #### `pill:loading` Event
+
+```text
+{
+  detail: {
+    url: URL
+    element: HTMLElement
+  }
+}
+```
 
 Is emitted when the new page loading has been started. This event wouldn't be emitted
 if page is cached.
@@ -190,17 +216,47 @@ Could be replaced with [PillOptions.onLoading()](#pilloptionsonloading) hook.
 
 #### `pill:mounting` Event
 
+```text
+{
+  detail: {
+    page: Page
+    url: URL
+    element: HTMLElement
+  }
+}
+```
+
 Is emitted when new page content is about to be added into the DOM.
 
 Could be replaced with [PillOptions.onMounting()](#pilloptionsonmounting) hook.
 
 #### `pill:ready` Event
 
+```text
+{
+  detail: {
+    page: Page
+    url: URL
+    element: HTMLElement
+  }
+}
+```
+
 Is emitted when the requested page is mounted into DOM and no futher work would be done.
 
 Could be replaced with [PillOptions.onReady()](#pilloptionsonready) hook.
 
 #### `pill:unmounting` Event
+
+```text
+{
+  detail: {
+    page: Page
+    url: URL
+    element: HTMLElement
+  }
+}
+```
 
 Is emitted when new page content is about to be removed from the DOM.
 
@@ -209,13 +265,13 @@ Could be replaced with [PillOptions.onMounting()](#pilloptionsonunmounting) hook
 ### Hooks
 
 #### `PillOptions.onError()`
-```
+```text
 (error) -> void
 ```
 Handle page loading exception. By default is `console.error`.
 
 #### `PillOptions.onLoading()`
-```
+```text
 (page:Page) -> void
 ```
 Handle loading start.
@@ -223,7 +279,7 @@ Handle loading start.
 Could be replaced with [`pill:loading` Event](#pillloading-event) listener.
 
 #### `PillOptions.onMounting()`
-```
+```text
 (page:Page, url:URL, element:HTMLElement) -> void
 ```
 Fires everytime new content is about to be loaded to the DOM.
@@ -231,7 +287,7 @@ Fires everytime new content is about to be loaded to the DOM.
 Could be replaced with [`pill:mounting` Event](#pillmounting-event) listener.
 
 #### `PillOptions.onReady()`
-```
+```text
 (page:Page) -> void
 ```
 Handle loading finish.
@@ -239,7 +295,7 @@ Handle loading finish.
 Could be replaced with [`pill:ready` Event](#pillready-event) listener.
 
 #### `PillOptions.onUnmounting()`
-```
+```text
 (page:Page, url:URL, element:HTMLElement) -> void
 ```
 Fires everytime content is about to be removed from the DOM.
@@ -249,7 +305,7 @@ Could be replaced with [`pill:unmounting` Event](#pillunmounting-event) listener
 ### Other options
 
 ### `PillOptions.fromError()`
-```
+```text
 (error:Error) -> {title, content}
 ```
 Use it to display notification when something went wrong.
@@ -257,7 +313,7 @@ If an error was thrown while handling request. You still able
 to render content using method `fromError`
 
 ### `PillOptions.getKeyFromUrl()`
-```
+```text
 (url:URL) -> String
 ```
 
@@ -266,14 +322,14 @@ are unknown to server and could not affect response. By default any
 new pathname and search string combination will cause new request.
 
 ### `PillOptions.shouldReload()`
-```
+```text
 (page:Page) -> Boolean
 ```
 
 Determine wether previously loaded page should be loaded from server.
 
 ### `PillOptions.shouldServe()`
-```
+```text
 (url:URL, target:HTMLElement) -> Boolean
 ```
 Developer-defined logic to determine whether the URL could be served by Pill.
