@@ -6,7 +6,7 @@ var EVENTS = {
   onError: 'pill:error',
 }
 
-function dispatchEvent(name, info){
+function dispatchEvent(name, info) {
   var event = new CustomEvent(name, {
     detail: info,
   })
@@ -107,14 +107,15 @@ export default function pill(selector, options) {
   var isLoading = false
 
   var element = document.querySelector(selector)
-  if (! element) {
+  if (!element) {
     throw new Error('Element "' + selector + '" not found')
   }
   var currentUrl = new URL(document.location)
   var currentPage = createPage(document.title, element.innerHTML, 200)
   var cache = {}
   cache[keyFromUrl(currentUrl)] = currentPage
-  function render (url, page, push) {
+
+  function render(url, page, push) {
     dispatchEvent(EVENTS.onUnmounting, {
       page,
       url,
@@ -150,6 +151,7 @@ export default function pill(selector, options) {
 
       if (shouldReload(cachedPage) !== true) {
         render(url, cachedPage, push)
+
         return
       }
     }
@@ -161,14 +163,14 @@ export default function pill(selector, options) {
     fetch(url)
     .then(function (res) {
       return res.text()
-      .then((function(text) {
+      .then(function (text) {
         return {
           res: res,
           text: text,
         }
-      }))
+      })
     })
-    .finally(function() {
+    .finally(function () {
       isLoading = false
     })
     .then(function (result) {
@@ -196,7 +198,7 @@ export default function pill(selector, options) {
       throw error
     })
     // Handle errors, including received from previous requesterror handling
-    .catch(function(error){
+    .catch(function (error) {
       dispatchEvent(EVENTS.onError, {
         url,
         element,
@@ -213,27 +215,34 @@ export default function pill(selector, options) {
     onLoading(url)
   }
 
-  function onClick (e) {
-    if (e.target.nodeName !== 'A') {
+  function onClick(event) {
+    if (event.target.nodeName !== 'A') {
       return
     }
 
-    var url = new URL(e.target.href, document.location)
-    if (! shouldServe(url, e.target)) {
+    var url = new URL(event.target.href, document.location)
+
+    if (!shouldServe(url, event.target)) {
       return
     }
 
-    e.preventDefault()
+    event.preventDefault()
 
     window.scrollTo(0, 0)
-    goto(url, ! isLoading)
+    goto(url, !isLoading)
   }
 
-  function onPopState(e) {
+  function onPopState(event) {
     goto(new URL(document.location), false)
-    requestAnimationFrame(function() {
-      var scrollY = e.state && e.state.scrollY || 0
-      var scrollX = e.state && e.state.scrollX || 0
+    requestAnimationFrame(function () {
+      var scrollY = 0
+      var scrollX = 0
+
+      if (event.state) {
+        scrollX = event.state.scrollX
+        scrollY = event.state.scrollY
+      }
+
       window.scrollTo(scrollX, scrollY)
     })
   }

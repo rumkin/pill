@@ -17,10 +17,12 @@
       "ecmaVersion": 8
     },
     "rules": {
-      "no-console": 0
+      "no-console": "off"
     }
-  }],
-  "rules": {
-    "no-console": "warn"
+    }],
+    "rules": {
+      "no-console": "off",
+      "func-names": "off",
+      "vars-on-top": "off"
   }
 }

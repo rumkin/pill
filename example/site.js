@@ -5,7 +5,6 @@ const indicator = document.getElementById('indicator')
 let timeout = 0
 pill('#page', {
   onLoading() {
-
     if (timeout) {
       clearTimeout(timeout)
       timeout = 0
@@ -69,6 +68,6 @@ document.addEventListener('pill:unmounting', appendEvent)
 document.addEventListener('pill:loading', appendEvent)
 document.addEventListener('pill:error', appendEvent)
 
-function appendEvent(event){
+function appendEvent(event) {
   console.info(event)
 }
