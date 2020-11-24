@@ -216,13 +216,21 @@ export default function pill(selector, options) {
   }
 
   function onClick(event) {
-    if (event.target.nodeName !== 'A') {
+    var target
+    for (const el of event.path) {
+      if (el.nodeName === 'A') {
+        target = el
+        break
+      }
+    }
+
+    if (!target) {
       return
     }
 
-    var url = new URL(event.target.href, document.location)
+    var url = new URL(target.href, document.location)
 
-    if (!shouldServe(url, event.target)) {
+    if (!shouldServe(url, target)) {
       return
     }
 
