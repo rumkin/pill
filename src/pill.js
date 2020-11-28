@@ -216,15 +216,17 @@ export default function pill(selector, options) {
   }
 
   function onClick(event) {
-    var target
-    for (const el of event.path) {
-      if (el.nodeName === 'A') {
-        target = el
+    var target = event.target
+    var isLink = false
+    while (target !== document.body) {
+      if (target.nodeName === 'A') {
+        isLink = true
         break
       }
+      target = target.parentNode
     }
 
-    if (!target) {
+    if (!isLink) {
       return
     }
 
