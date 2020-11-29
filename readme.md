@@ -6,7 +6,7 @@
   <a href="https://npmjs.com/package/pill">
     <img alt="badge: npm version" src="https://img.shields.io/npm/v/pill.svg?style=flat-square" />
   </a>
-  <img alt="badge: size 1.1 KiB" src="https://img.shields.io/badge/size-1.1%20KiB-blue.svg?style=flat-square" />
+  <img alt="badge: size 1.45 KiB" src="https://img.shields.io/badge/size-1.45%20KiB-blue.svg?style=flat-square" />
   <img alt="badge: deps 0" src="https://img.shields.io/badge/deps-0-blue.svg?style=flat-square" />
 </p>
 
@@ -14,9 +14,9 @@ Pill adds dynamic content loading to static sites and makes content loading
 smooth for users. It's pretty small only _1 KiB_ minified and gzipped. It fits perfectly
 for static sites with WebComponents.
 
-* 🦋 **Lightweight**: `1 KiB` gzipped.
+* 🐥 **Tiny**: `1.5 KiB` gzipped.
 * 🥤 **Easy-to-use**: only one function call.
-* 🌪 **Powerful API**: hooks and callbacks could modify the default behavior.
+* 🎮 **Powerful API**: hooks and callbacks could modify the default behavior.
 
 > Pill development started with the [tweet](https://twitter.com/sitnikcode/status/1109626507331338240)
 by Andrey Sitnik [@ai](https://github.com/ai).

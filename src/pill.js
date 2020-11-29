@@ -88,6 +88,15 @@ function keyFromUrlDefault(url) {
   return normalizePathname(url.pathname) + url.search
 }
 
+// Determine wether click is a new tab opening click.
+var hasModifierOn = /(Mac OS|MacPPC|MacIntel|Mac_PowerPC|Macintosh)/.test(navigator.platform)
+  ? function hasModifierOn(event) {
+    return event.metaKey
+  }
+  : function hasModifierOn(event) {
+    return event.ctrlKey
+  }
+
 export default function pill(selector, options) {
   if (typeof window.history.pushState !== 'function') {
     return
@@ -216,6 +225,10 @@ export default function pill(selector, options) {
   }
 
   function onClick(event) {
+    if (hasModifierOn(event)) {
+      return
+    }
+
     var target = event.target
     var isLink = false
     while (target !== document.body) {
