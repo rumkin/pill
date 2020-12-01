@@ -8,11 +8,10 @@ async function main() {
   const files = exec('git diff --cached --name-status')
   .toString('utf8')
   .split('\n')
-  .filter(s => /^(M|A)/.test(s))
-  .filter(s => /\.js$/.test(s))
-  .map(s => s.slice(2))
+  .filter(status => /^(M|A)/.test(status) && /\.js$/.test(status))
+  .map(status => status.slice(2))
 
-  if (! files.length) {
+  if (!files.length) {
     return 0
   }
 
@@ -51,9 +50,8 @@ async function main() {
 }
 
 main()
+.then((code = 0) => process.exit(code))
 .catch(error => {
   console.error(error)
-
-  return 1
+  process.exit(1)
 })
-.then((code = 0) => process.exit(code))

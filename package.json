@@ -45,7 +45,8 @@
   "homepage": "https://github.com/rumkin/pill#readme",
   "husky": {
     "hooks": {
-      "pre-commit": "bin/eslint-commit.js"
+      "pre-commit": "bin/lint-staged.js",
+      "pre-push": "bin/lint-owned.js"
     }
   }
 }
