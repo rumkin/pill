@@ -18,5 +18,9 @@ pill/
 *.lock
 *.pid.lock
 
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
+
 example/pill.js
 example/pill.min.js
