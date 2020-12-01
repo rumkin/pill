@@ -148,6 +148,9 @@ export default function pill(selector, options) {
     if (push && url.hash.length > 1) {
       scrollToAnchor(url.hash.slice(1))
     }
+    else {
+      window.scrollTo(0, 0)
+    }
   }
 
   // Initial scroll
@@ -251,7 +254,6 @@ export default function pill(selector, options) {
 
     event.preventDefault()
 
-    window.scrollTo(0, 0)
     goto(url, !isLoading)
   }
 
