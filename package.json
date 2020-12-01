@@ -26,7 +26,7 @@
     "build:iife": "rollup --format iife --name pill -o dist/pill.js src/pill.js",
     "build:cjs": "rollup --format cjs --name pill -o dist/node/pill.js src/pill.js",
     "build:minify": "babel-minify -o dist/pill.min.js dist/pill.js",
-    "build:checksum": "node bin/checksum.js dist dist/*.js > dist/checksum.txt",
+    "build:digest": "node bin/digest.js sha512 dist/*.js",
     "prepublishOnly": "npm run committed && npm run clean && npm run build",
     "lint": "eslint src",
     "lint:staged": "bin/lint-staged.js",
