@@ -9,23 +9,32 @@
   "devDependencies": {
     "@codegoods/eslint-config-base": "^2.1.0",
     "babel-minify": "^0.5.0",
+    "chalk": "^4.1.0",
     "copy": "^0.3.2",
     "eslint": "^7.5.0",
     "husky": "^4.2.5",
+    "picomatch": "^2.2.2",
+    "pretty-bytes": "^5.4.1",
     "rollup": "^1.7.4",
     "serve": "^10.1.2"
   },
   "scripts": {
     "start": "npm run build:iife && node bin/copy-files.js && serve -l 8080 -n example",
     "clean": "rm -rf dist",
+    "committed": "bin/prepublish.js",
     "build": "npm run build:iife && npm run build:cjs && npm run build:minify && npm run build:checksum",
     "build:iife": "rollup --format iife --name pill -o dist/pill.js src/pill.js",
     "build:cjs": "rollup --format cjs --name pill -o dist/node/pill.js src/pill.js",
     "build:minify": "babel-minify -o dist/pill.min.js dist/pill.js",
     "build:checksum": "node bin/checksum.js dist dist/*.js > dist/checksum.txt",
-    "prepublishOnly": "npm run lint && npm run clean && npm run build",
+    "prepublishOnly": "npm run committed && npm run clean && npm run build",
     "lint": "eslint src",
-    "lint:fix": "eslint --fix src"
+    "lint:staged": "bin/lint-staged.js",
+    "lint:owned": "bin/lint-owned.js",
+    "lint:fix": "eslint --fix src",
+    "size:pill": "bin/size.js dist/pill.js",
+    "size:pill-min": "bin/size.js dist/pill.min.js",
+    "size": "npm run size:pill && npm run size:pill-min"
   },
   "repository": {
     "type": "git",
@@ -45,8 +54,8 @@
   "homepage": "https://github.com/rumkin/pill#readme",
   "husky": {
     "hooks": {
-      "pre-commit": "bin/lint-staged.js",
-      "pre-push": "bin/lint-owned.js"
+      "pre-commit": "npm run lint:staged",
+      "pre-push": "npm run lint:owned"
     }
   }
 }
