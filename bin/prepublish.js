@@ -17,11 +17,16 @@ const changes = exec('git status --short')
 .toString('utf8')
 .trimEnd()
 .split(/\n/g)
+.filter(val => val !== '')
 .map((change) => {
   const [type, file] = change.trim().split(/\s+/)
 
   return {type, file}
 })
+
+if (!changes.length) {
+  process.exit(0)
+}
 
 const pkg = require(process.cwd() + '/package.json')
 let hasMatch
