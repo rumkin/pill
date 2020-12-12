@@ -11,12 +11,12 @@
 </p>
 
 Pill adds dynamic content loading to static sites and makes content loading
-smooth for users. It's pretty small only _1 KiB_ minified and gzipped. It fits perfectly
+smooth for users. It's pretty small only _1.45 KiB_ minified and gzipped. It fits perfectly
 for static sites with WebComponents.
 
-* 🐥 **Tiny**: `1.5 KiB` gzipped.
-* 🥤 **Easy-to-use**: only one function call.
-* 🎮 **Powerful API**: hooks and callbacks could modify the default behavior.
+* 🐥 **Tiny**: `1.45 KiB` gzipped.
+* 🥤 **Easy-to-use**: single function call.
+* 🎮 **Handful**: hooks and callbacks could modify the default behavior.
 
 > Pill development started with the [tweet](https://twitter.com/sitnikcode/status/1109626507331338240)
 by Andrey Sitnik [@ai](https://github.com/ai).

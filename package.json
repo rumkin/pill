@@ -1,7 +1,7 @@
 {
   "name": "pill",
   "description": "Dynamic content loading for static sites.",
-  "version": "1.4.6-rc.1",
+  "version": "1.4.6",
   "main": "dist/node/pill.js",
   "files": [
     "dist/"
